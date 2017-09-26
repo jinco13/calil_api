@@ -1,7 +1,7 @@
 require "spec_helper"
 
-RSpec.describe CalilApi do
-  
+RSpec.describe CalilApi::Library do
+
   before do
     allow_any_instance_of(CalilApi::Client).to receive(:appkey).and_return('lib_appkey')
   end
