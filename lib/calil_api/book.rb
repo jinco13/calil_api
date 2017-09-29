@@ -10,7 +10,7 @@ module CalilApi
     end
 
     def endpoint
-      "https://api.calil.jp/check"
+      CalilApi::Configuration::URL_BOOK
     end
 
     def client
@@ -21,29 +21,27 @@ module CalilApi
       params.merge!({
         isbn: isbns.join(","),
         systemid: systemids.join(","),
-        format: "json"
+        format: CalilApi::Configuration::DEFAULT_FORMAT
       })
 
       session_id = nil
-      continue_status = 1
+      continue_status = CalilApi::Configuration::STATUS_LOADING
       retry_count = 0
       result = nil
 
-      vRETRY_LIMIT = 10
-      vRETRY_WAIT_TIME = 5
-
-      vRETRY_LIMIT.times do |count|
+      CalilApi::Configuration::RETRY_LIMIT.times do |count|
         retry_count = count
         result = book_request(params, session_id)
         continue_status = result["continue"]
         session_id = result["session_id"]
-        break if continue_status == 0
+        break if continue_status == CalilApi::Configuration::STATUS_FINISHED
 
-        sleep vRETRY_WAIT_TIME
+        sleep CalilApi::Configuration::RETRY_WAIT_TIME
       end
 
       # retry limit error
-      raise "retry error: retry limit exceeded" if continue_status == 1 && retry_count == (vRETRY_LIMIT - 1)
+      raise "ERROR: Retry limit exceeded" if continue_status == CalilApi::Configuration::STATUS_LOADING \
+                                              && retry_count == (CalilApi::Configuration::RETRY_LIMIT - 1)
 
       books = []
       result["books"].each do |isbn,h|

@@ -7,7 +7,7 @@ module CalilApi
     end
 
     def endpoint
-      "https://api.calil.jp/library"
+      CalilApi::Configuration::URL_LIBRARY
     end
 
     def client

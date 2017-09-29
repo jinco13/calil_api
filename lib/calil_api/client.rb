@@ -8,8 +8,8 @@ module CalilApi
     def initialize(endpoint, debug_mode = false)
       @url = URI.parse(endpoint)
       @debug_mode = debug_mode
-      @format = 'json'
-      @appkey = 'appkey'
+      @format = CalilApi::Configuration::DEFAULT_FORMAT
+      @appkey = CalilApi::Configuration::APPKEY
     end
 
     def format
