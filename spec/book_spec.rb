@@ -22,16 +22,16 @@ RSpec.describe CalilApi::Book do
       expect(result[0].systemid.id).to eq("Tokyo_Setagaya")
     end
 
-    it 'should return number of available books in system' do
+    it 'should return number of books in system' do
       result = book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
-      expect(result[0].systemid.available).to eq(13)
+      expect(result[0].systemid.total).to eq(19)
     end
 
     it 'should return number of available books in system' do
       result = book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
-      expect(result[0].systemid.total).to eq(19)
+      expect(result[0].systemid.available).to eq(13)
     end
   end
 

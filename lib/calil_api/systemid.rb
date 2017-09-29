@@ -1,19 +1,23 @@
 module CalilApi
   class Systemid
     attr_reader :id, :status, :url, :libkey, :total, :available
+    STATUS_AVAILABLE = "貸出可"
+
     def initialize(id, status, url, libkey)
       @id = id
       @status = status
       @url = url
+      @libkey = libkey
+      @total = libkey.size
       load_libkey(libkey)
     end
 
     def load_libkey(libkey)
-      @total = libkey.size
       @available = 0
-      libkey.each do |k2,v2|
-        @available += 1 if v2 == "貸出可"
+      libkey.each do |key,val|
+        @available += 1 if val == STATUS_AVAILABLE
       end if libkey != nil
     end
+
   end
 end

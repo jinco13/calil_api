@@ -1,16 +1,12 @@
 module CalilApi
   class Book
     attr_reader :isbn, :systemid
-    
-    def initialize(data=nil,isbn=nil)
-      data.each do |k,v|
-        @isbn = isbn
-        @systemid = Systemid.new(k, v['status'], v['reserveurl'], v['libkey'])
-      end if data!=nil
-    end
 
-    def systemid
-      @systemid
+    def initialize(data=nil,isbn=nil)
+      data.each do |sid,prop|
+        @isbn = isbn
+        @systemid = Systemid.new(sid, prop['status'], prop['reserveurl'], prop['libkey'])
+      end if data!=nil
     end
 
     def endpoint
