@@ -1,19 +1,16 @@
 module CalilApi
   class Book
-    attr_reader :isbn, :systemid, :status, :url, :libs, :available, :total
+    attr_reader :isbn, :systemid
+    
     def initialize(data=nil,isbn=nil)
       data.each do |k,v|
         @isbn = isbn
-        @systemid = k
-        @status = v['status']
-        @url = v['reserveurl']
-        #puts "isbn=#{isbn} systemid=#{k}"
-        #puts "status=#{v['status']}, url=#{v['reserveurl']}"
-        v['libkey'].each do |k2,v2|
-          puts "lib=#{k2}, stat=#{v2}"
-        end if v['libkey'] != nil
+        @systemid = Systemid.new(k, v['status'], v['reserveurl'], v['libkey'])
       end if data!=nil
-      puts "#{@url}, #{@isbn}, #{systemid}"
+    end
+
+    def systemid
+      @systemid
     end
 
     def endpoint
@@ -53,10 +50,7 @@ module CalilApi
       raise "retry error: retry limit exceeded" if continue_status == 1 && retry_count == (vRETRY_LIMIT - 1)
 
       books = []
-      #puts "isbn=#{isbn}"
-      #puts "systemid=#{systemid}"
       result["books"].each do |isbn,h|
-        #puts "#{v}"
         books << CalilApi::Book.new(result["books"][isbn],isbn)
       end
       books
