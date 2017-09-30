@@ -1,12 +1,17 @@
 module CalilApi
   class Book
-    attr_reader :isbn, :systemid
+    attr_reader :isbn, :libraries
 
     def initialize(data=nil,isbn=nil)
+      @libraries = []
       data.each do |sid,prop|
         @isbn = isbn
-        @systemid = Systemid.new(sid, prop['status'], prop['reserveurl'], prop['libkey'])
+        @libraries << Systemid.new(sid, prop['status'], prop['reserveurl'], prop['libkey'])
       end if data!=nil
+    end
+
+    def reservable?
+      libraries.any?{|lib| lib.available? }
     end
 
     def endpoint

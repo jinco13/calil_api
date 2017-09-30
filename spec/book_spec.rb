@@ -9,7 +9,7 @@ RSpec.describe CalilApi::Book do
     { body: '{"status":"ok"}' }
   end
 
-  context 'get list of libraries' do
+  context 'get list of available libraries using one book' do
     before do
       @expected_request = stub_request(:get, "https://api.calil.jp/check?appkey=book_appkey&format=json&systemid=Tokyo_Setagaya&isbn=4834000826").
          with(:headers => {'User-Agent' => "CalilApi v#{CalilApi::VERSION}(ruby-#{RUBY_VERSION} [#{RUBY_PLATFORM}])"}).
@@ -19,19 +19,39 @@ RSpec.describe CalilApi::Book do
     it 'should return books with systems' do
       result = book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
-      expect(result[0].systemid.id).to eq("Tokyo_Setagaya")
+      expect(result[0].libraries[0].id).to eq("Tokyo_Setagaya")
     end
 
     it 'should return number of books in system' do
       result = book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
-      expect(result[0].systemid.total).to eq(19)
+      expect(result[0].libraries[0].total).to eq(19)
     end
 
     it 'should return number of available books in system' do
       result = book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
-      expect(result[0].systemid.available).to eq(13)
+      expect(result[0].libraries[0].available).to eq(13)
+    end
+
+    it 'should return true if reservable' do
+      result = book.search(['4834000826'], ['Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].reservable?).to eq(true)
+    end
+  end
+
+  context 'get list of available libraries using one book' do
+    before do
+      @expected_request = stub_request(:get, "https://api.calil.jp/check?appkey=book_appkey&format=json&systemid=Aomori_Pref,Tokyo_Setagaya&isbn=4834000826").
+         with(:headers => {'User-Agent' => "CalilApi v#{CalilApi::VERSION}(ruby-#{RUBY_VERSION} [#{RUBY_PLATFORM}])"}).
+         to_return(:status => 200, :body => fixture('one_book_2lib.json'), :headers => {})
+    end
+
+    it 'should return books with systems' do
+      result = book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].libraries.size).to eq(2)
     end
   end
 

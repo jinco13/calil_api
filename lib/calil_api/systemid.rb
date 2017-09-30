@@ -12,6 +12,10 @@ module CalilApi
       load_libkey(libkey)
     end
 
+    def available?
+      available > 0
+    end
+
     def load_libkey(libkey)
       @available = 0
       libkey.each do |key,val|

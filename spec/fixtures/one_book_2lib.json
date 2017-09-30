@@ -1,0 +1,38 @@
+{
+  "session": "2d26915ceabcffdc0d060a5b7c690426",
+  "books":
+    {"4834000826":
+      {"Tokyo_Setagaya":
+        { "status": "OK",
+          "reserveurl": "http://libweb.city.setagaya.tokyo.jp/clis/detail?NUM=002380442&CTG=1&RTN=01&TM=090249802",
+          "libkey":
+            { "玉川台": "貸出可",
+              "世田谷": "貸出中",
+              "経堂": "貸出可",
+              "砧": "貸出可",
+              "粕谷": "貸出中",
+              "中央": "貸出可",
+              "喜多見": "貸出可",
+              "桜丘": "貸出中",
+              "奥沢": "貸出可",
+              "尾山台": "貸出可",
+              "野毛": "貸出可",
+              "下馬": "貸出可",
+              "梅丘": "貸出可",
+              "鎌田": "貸出中",
+              "池尻": "貸出可",
+              "上北沢": "貸出可",
+              "代田": "貸出中",
+              "烏山": "貸出可",
+              "深沢": "貸出可"}
+            },
+      "Aomori_Pref":
+        { "status": "OK",
+          "reserveurl": "https://www.plib.pref.aomori.lg.jp/opac/OPP1500?SELDATA=TOSHO&SSNO=3-0020837375",
+          "libkey":
+            { "青県図": "貸出可" }
+        }
+      }
+    },
+  "continue": 0
+}
