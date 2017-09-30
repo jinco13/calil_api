@@ -1,0 +1,11 @@
+{
+  "session": "e50678c508bc4ac6c86c943341a89102",
+  "books": {
+    "4334926940": {
+      "Tokyo_Setagaya": {"status": "OK", "reserveurl": "http://libweb.tokyo.jp/123",
+        "libkey": {"玉川台": "貸出中", "世田谷": "貸出中", "経堂": "館内のみ"}
+      }
+    }
+  },
+  "continue": 0
+}

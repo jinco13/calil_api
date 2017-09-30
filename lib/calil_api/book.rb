@@ -25,8 +25,7 @@ module CalilApi
     def search(isbns, systemids, params = {})
       params.merge!({
         isbn: isbns.join(","),
-        systemid: systemids.join(","),
-        format: CalilApi::Configuration::DEFAULT_FORMAT
+        systemid: systemids.join(",")
       })
 
       session_id = nil
@@ -54,6 +53,8 @@ module CalilApi
       end
       books
     end
+
+    private
 
     def book_request(params, session_id=nil)
       params.merge!(session_id: session_id) if session_id
