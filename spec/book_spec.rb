@@ -99,7 +99,7 @@ RSpec.describe CalilApi::Book do
     it 'should return false when reservable? is called' do
       result = book.search(['4334926940'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.twice
-      expect(result[0].reservable?).to eq(true)
+      expect(result[0].reservable?).to eq(false)
     end
   end
 end
