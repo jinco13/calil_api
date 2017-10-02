@@ -45,7 +45,7 @@ module CalilApi
 
       # retry limit error
       raise "ERROR: Retry limit exceeded" if continue_status == CalilApi::Configuration::STATUS_LOADING \
-                                              && retry_count == (CalilApi::Configuration::RETRY_LIMIT - 1)
+                                              and retry_count == (CalilApi::Configuration::RETRY_LIMIT - 1)
 
       books = []
       result["books"].each do |isbn,h|
