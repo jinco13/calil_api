@@ -23,8 +23,8 @@ module CalilApi
       params[:appkey] = appkey
       response = request(url.path, params)
       json = response.body
-      jsonp.gsub!(/^.*callback\(/, '')
-      jsonp.gsub!(/\);$/, '') 
+      json.gsub!(/^.*callback\(/, '')
+      json.gsub!(/\);$/, '') 
       #jsonp.gsub!(/(\w+):/, '"\1":')
       JSON.parse(json)
     end
