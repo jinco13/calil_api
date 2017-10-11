@@ -10,6 +10,14 @@ module CalilApi
       end if data!=nil
     end
 
+    def url(sid=nil)
+      if sid
+        return libraries.find{|l|l.sid==sid}.url
+      else
+        return libraries.any?{|l|l.url != nil}
+      end
+    end
+
     def reservable?
       libraries.any?{|lib| lib.available? }
     end
