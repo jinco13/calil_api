@@ -12,7 +12,7 @@ module CalilApi
 
     def url(sid=nil)
       if sid
-        return libraries.find{|l|l.sid==sid}.url
+        return libraries.find{|l|l.id==sid}.url
       else
         return libraries.find{|l|l.url != nil}.url
       end

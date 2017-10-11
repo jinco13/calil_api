@@ -17,25 +17,31 @@ RSpec.describe CalilApi::Book do
     end
 
     it 'should return books with systems' do
-      result = book.search(['4834000826'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].libraries[0].id).to eq("Tokyo_Setagaya")
     end
 
     it 'should return number of books in system' do
-      result = book.search(['4834000826'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].libraries[0].total).to eq(19)
     end
 
     it 'should return number of available books in system' do
-      result = book.search(['4834000826'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].libraries[0].available).to eq(13)
     end
 
+    it 'should return reserve url from one of the systemid' do
+      result = CalilApi::Book.search(['4834000826'], ['Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].url).to include('libweb.city.setagaya.tokyo.jp')
+    end
+
     it 'should return true if reservable' do
-      result = book.search(['4834000826'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4834000826'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].reservable?).to eq(true)
     end
@@ -49,9 +55,27 @@ RSpec.describe CalilApi::Book do
     end
 
     it 'should return books with systems' do
-      result = book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].libraries.size).to eq(2)
+    end
+
+    it 'should return url from library' do
+      result = CalilApi::Book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].url).to include('setagaya').or include('aomori')
+    end
+
+    it 'should return url from library when systemid is specified Aomori_Pref' do
+      result = CalilApi::Book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].url('Aomori_Pref')).to include('aomori')
+    end
+
+    it 'should return url from library when systemid is specified Tokyo_Setagaya' do
+      result = CalilApi::Book.search(['4834000826'], ['Aomori_Pref', 'Tokyo_Setagaya'])
+      expect(@expected_request).to have_been_made.once
+      expect(result[0].url('Tokyo_Setagaya')).to include('setagaya')
     end
   end
 
@@ -63,7 +87,7 @@ RSpec.describe CalilApi::Book do
     end
 
     it 'should return list of books matching isbn in that library' do
-      result = book.search(['4334926940','4834000826'], ['Tokyo_Setagaya','Aomori_Pref'])
+      result = CalilApi::Book.search(['4334926940','4834000826'], ['Tokyo_Setagaya','Aomori_Pref'])
       expect(@expected_request).to have_been_made.once
       expect(result.size).to eq(2)
     end
@@ -77,7 +101,7 @@ RSpec.describe CalilApi::Book do
     end
 
     it 'should return false when reservable? is called' do
-      result = book.search(['4334926940'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4334926940'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.once
       expect(result[0].reservable?).to eq(false)
     end
@@ -97,7 +121,7 @@ RSpec.describe CalilApi::Book do
     end
 
     it 'should return false when reservable? is called' do
-      result = book.search(['4334926940'], ['Tokyo_Setagaya'])
+      result = CalilApi::Book.search(['4334926940'], ['Tokyo_Setagaya'])
       expect(@expected_request).to have_been_made.twice
       expect(result[0].reservable?).to eq(false)
     end

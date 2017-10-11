@@ -1,6 +1,7 @@
 module CalilApi
   class Systemid
     attr_reader :id, :status, :url, :libkey, :total, :available
+    
     STATUS_AVAILABLE = "貸出可"
     STATUS_ONRENTAL = "貸出中"
 
