@@ -14,7 +14,7 @@ module CalilApi
       if sid
         return libraries.find{|l|l.sid==sid}.url
       else
-        return libraries.any?{|l|l.url != nil}
+        return libraries.find{|l|l.url != nil}.url
       end
     end
 
