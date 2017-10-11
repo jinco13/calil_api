@@ -22,7 +22,7 @@ module CalilApi
       @client ||= CalilApi::Client.new(endpoint)
     end
 
-    def search(isbns, systemids, params = {})
+    def self.search(isbns, systemids, params = {})
       params.merge!({
         isbn: isbns.join(","),
         systemid: systemids.join(",")
