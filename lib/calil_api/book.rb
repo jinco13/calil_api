@@ -35,7 +35,7 @@ module CalilApi
 
       CalilApi::Configuration::RETRY_LIMIT.times do |count|
         retry_count = count
-        result = book_request(params, session_id)
+        result = CalilApi::Book.book_request(params, session_id)
         continue_status = result["continue"]
         session_id = result["session_id"]
         break if continue_status == CalilApi::Configuration::STATUS_FINISHED
@@ -56,7 +56,7 @@ module CalilApi
 
     private
 
-    def book_request(params, session_id=nil)
+    def self.book_request(params, session_id=nil)
       params.merge!(session_id: session_id) if session_id
       client.get(params)
     end
