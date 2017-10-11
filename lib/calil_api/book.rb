@@ -18,7 +18,7 @@ module CalilApi
       CalilApi::Configuration::URL_BOOK
     end
 
-    def client
+    def self.client
       @client ||= CalilApi::Client.new(endpoint)
     end
 
@@ -58,7 +58,7 @@ module CalilApi
 
     def self.book_request(params, session_id=nil)
       params.merge!(session_id: session_id) if session_id
-      client.get(params)
+      CalilApi::Book.client.get(params)
     end
   end
 end
