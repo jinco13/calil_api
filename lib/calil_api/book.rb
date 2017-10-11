@@ -14,7 +14,7 @@ module CalilApi
       libraries.any?{|lib| lib.available? }
     end
 
-    def endpoint
+    def self.endpoint
       CalilApi::Configuration::URL_BOOK
     end
 
