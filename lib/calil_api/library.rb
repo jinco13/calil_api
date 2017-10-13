@@ -3,7 +3,8 @@ module CalilApi
     def initialize(hash=nil)
       atr = %w(systemid systemname libkey libid short formal url_pc address pref city post tel geocode category image distance)
       hash.each do |k,v|
-        self.class.send(:define_method, k){ v } if atr.include?(k)
+        me = class << self; self end
+        me.send(:define_method, k){ v } if atr.include?(k)
       end if hash != nil
     end
 

@@ -25,7 +25,9 @@ RSpec.describe CalilApi::Library do
 
     it 'should return 上尾市 for the first library returned' do
       libraries = CalilApi::Library.search(:pref => '埼玉県')
-      expect(libraries[0].city).to eq('上尾市')
+      expect(libraries[0].short).to eq('たちばな分館')
+      expect(libraries[1].short).to eq('上尾市図書館')
+      expect(libraries[2].short).to eq('上平公民館')
     end
 
     it 'should return Saitama_Ageo for the first library returned' do
