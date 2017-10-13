@@ -18,18 +18,18 @@ RSpec.describe CalilApi::Library do
     end
 
     it 'should return list of libraries in saitama' do
-      libraries = library.search(:pref => '埼玉県')
+      libraries = CalilApi::Library.search(:pref => '埼玉県')
       expect(@expected_request).to have_been_made.once
       expect(libraries.size).to eq(3)
     end
 
     it 'should return 上尾市 for the first library returned' do
-      libraries = library.search(:pref => '埼玉県')
+      libraries = CalilApi::Library.search(:pref => '埼玉県')
       expect(libraries[0].city).to eq('上尾市')
     end
 
     it 'should return Saitama_Ageo for the first library returned' do
-      libraries = library.search(:pref => '埼玉県')
+      libraries = CalilApi::Library.search(:pref => '埼玉県')
       expect(libraries[0].systemid).to eq("Saitama_Ageo")
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe CalilApi::Library do
     end
 
     it 'should return empty list' do
-      libraries = library.search(:pref => '存在しない県')
+      libraries = CalilApi::Library.search(:pref => '存在しない県')
       expect(libraries.size).to eq(0)
     end
   end

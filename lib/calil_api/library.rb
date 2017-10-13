@@ -7,15 +7,15 @@ module CalilApi
       end if hash != nil
     end
 
-    def endpoint
+    def self.endpoint
       CalilApi::Configuration::URL_LIBRARY
     end
 
-    def client
+    def self.client
       @client ||= CalilApi::Client.new(endpoint)
     end
 
-    def search(params)
+    def self.search(params)
       libraries = []
       result = client.get(params)
       result.each do |hash|
